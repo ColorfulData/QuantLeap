@@ -1,14 +1,15 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { v4 as uuidv4 } from 'uuid'
 import { ChevronDown, Maximize2, Minimize2, X, Search, User, Bell, MessageSquare, Settings, Globe, TrendingUp, PieChart, FileText, Save, Monitor, Grid, Layers } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import TradingViewChart from '@/components/TradingViewChart'
+import NewsFeed from '@/components/NewsFeed'
 
 type WindowType = 'chart' | 'orderBook' | 'timeAndSales' | 'newsFeed' | 'watchlist' | 'portfolio' | 'optionsChain' | 'marketDepth' | 'excelIntegration' | 'screener' | 'riskAnalytics' | 'strategyBuilder'
 
@@ -18,27 +19,56 @@ interface Window {
   title: string
   content: React.ReactNode
 }
-
 const AdvancedTradingTerminal: React.FC = () => {
-  const [workspace, setWorkspace] = useState({
-    windows: [
+  const [workspace, setWorkspace] = useState<Window[]>([
+      { id: uuidv4(), type: 'chart', title: 'Advanced Chart', content: <TradingViewChart /> },
       { id: uuidv4(), type: 'chart', title: 'Advanced Chart', content: <ChartWindow /> },
       { id: uuidv4(), type: 'orderBook', title: 'Order Book', content: <OrderBookWindow /> },
       { id: uuidv4(), type: 'timeAndSales', title: 'Time & Sales', content: <TimeAndSalesWindow /> },
-      { id: uuidv4(), type: 'newsFeed', title: 'News Feed', content: <NewsFeedWindow /> },
+      { id: uuidv4(), type: 'newsFeed', title: 'News Feed', content: <NewsFeed /> },
       { id: uuidv4(), type: 'watchlist', title: 'Watchlist', content: <WatchlistWindow /> },
       { id: uuidv4(), type: 'portfolio', title: 'Portfolio', content: <PortfolioWindow /> },
-    ] as Window[],
-  })
+  ])
+
+  const [currentTime, setCurrentTime] = useState(new Date())
+  const [ramUsage, setRamUsage] = useState(0)
+  const [marketStatus, setMarketStatus] = useState('Closed')
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date())
+    }, 1000)
+
+    const ramTimer = setInterval(() => {
+      setRamUsage(Math.random() * 8)
+    }, 5000)
+
+    const marketTimer = setInterval(() => {
+      const now = new Date()
+      const day = now.getDay()
+      const hour = now.getHours()
+      if (day >= 1 && day <= 5 && hour >= 9 && hour < 16) {
+        setMarketStatus('Open')
+      } else {
+        setMarketStatus('Closed')
+      }
+    }, 60000)
+
+    return () => {
+      clearInterval(timer)
+      clearInterval(ramTimer)
+      clearInterval(marketTimer)
+    }
+  }, [])
 
   const handleDragEnd = (result: any) => {
     if (!result.destination) return
 
-    const newWindows = Array.from(workspace.windows)
+    const newWindows = Array.from(workspace)
     const [reorderedItem] = newWindows.splice(result.source.index, 1)
     newWindows.splice(result.destination.index, 0, reorderedItem)
 
-    setWorkspace({ ...workspace, windows: newWindows })
+    setWorkspace(newWindows)
   }
 
   const addWindow = (type: WindowType) => {
@@ -48,7 +78,7 @@ const AdvancedTradingTerminal: React.FC = () => {
       title: `New ${type.charAt(0).toUpperCase() + type.slice(1)} Window`,
       content: getWindowContent(type),
     }
-    setWorkspace({ ...workspace, windows: [...workspace.windows, newWindow] })
+    setWorkspace([...workspace, newWindow])
   }
 
   const getWindowContent = (type: WindowType): React.ReactNode => {
@@ -81,13 +111,34 @@ const AdvancedTradingTerminal: React.FC = () => {
         return <div>Unknown window type</div>
     }
   }
+  const closeWindow = (id: string) => {
+    setWorkspace(prevState => prevState.filter(window => window.id !== id))
+  }
+
+  const minimizeWindow = (id: string) => {
+    // Implement minimize functionality (e.g., change window state or size)
+    setWorkspace(prevState =>
+      prevState.map(window =>
+        window.id === id ? { ...window, minimized: true } : window
+      )
+    )
+  }
+
+  const maximizeWindow = (id: string) => {
+    // Implement maximize functionality (e.g., change window state or size)
+    setWorkspace(prevState =>
+      prevState.map(window =>
+        window.id === id ? { ...window, minimized: false, maximized: true } : window
+      )
+    )
+  }
 
   return (
     <div className="h-screen flex flex-col bg-gray-900 text-white font-mono">
       {/* Top Navigation Bar */}
       <header className="h-12 bg-gray-800 flex items-center px-4 justify-between border-b border-gray-700">
         <div className="flex items-center space-x-4">
-          <h1 className="text-xl font-bold text-blue-500">AdvancedTrade</h1>
+          <h1 className="text-xl font-bold text-blue-500">QuantLeap</h1>
           <nav className="hidden md:flex space-x-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -203,7 +254,7 @@ const AdvancedTradingTerminal: React.FC = () => {
               {...provided.droppableProps}
               className="flex-1 p-4 overflow-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-gray-900"
             >
-              {workspace.windows.map((window, index) => (
+              {workspace.map((window, index) => (
                 <Draggable key={window.id} draggableId={window.id} index={index}>
                   {(provided) => (
                     <div
@@ -211,7 +262,12 @@ const AdvancedTradingTerminal: React.FC = () => {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
-                      <TradingWindow window={window} />
+                      <TradingWindow
+                        window={window}
+                        onClose={() => closeWindow(window.id)}
+                        onMinimize={() => minimizeWindow(window.id)}
+                        onMaximize={() => maximizeWindow(window.id)}
+                      />
                     </div>
                   )}
                 </Draggable>
@@ -225,25 +281,25 @@ const AdvancedTradingTerminal: React.FC = () => {
       {/* Bottom Status Bar */}
       <footer className="h-8 bg-gray-800 text-xs px-4 flex items-center justify-between border-t border-gray-700">
         <div>Connected: NYSE, NASDAQ</div>
-        <div>Market Hours: Open</div>
+        <div>Market Hours: {marketStatus}</div>
         <div>Data Feed: Real-time</div>
-        <div>Account: DEMO-123456</div>
-        <div>CPU: 35% | RAM: 4.2GB</div>
-        <div>{new Date().toLocaleTimeString()}</div>
+        <div>Account: Jay-7777</div>
+        <div>RAM: {ramUsage.toFixed(1)}GB</div>
+        <div>{currentTime.toLocaleTimeString()}</div>
       </footer>
     </div>
   )
 }
 
-const TradingWindow: React.FC<{ window: Window }> = ({ window }) => {
+const TradingWindow: React.FC<{ window: Window; onClose: () => void; onMinimize: () => void; onMaximize: () => void }> = ({ window, onClose, onMinimize, onMaximize }) => {
   return (
     <div className="bg-gray-800 rounded overflow-hidden border border-gray-700 flex flex-col h-[calc(50vh-40px)]">
       <div className="h-8 bg-gray-700 flex items-center justify-between px-3 text-xs border-b border-gray-600">
         <span className="text-blue-400 font-semibold">{window.title}</span>
         <div className="flex space-x-2">
-          <Button variant="ghost" size="icon" className="h-5 w-5"><Minimize2 className="h-3 w-3" /></Button>
-          <Button variant="ghost" size="icon" className="h-5 w-5"><Maximize2 className="h-3 w-3" /></Button>
-          <Button variant="ghost" size="icon" className="h-5 w-5"><X className="h-3 w-3" /></Button>
+          <Button variant="ghost" size="icon" className="h-5 w-5" onClick={onMinimize}><Minimize2 className="h-3 w-3" /></Button>
+          <Button variant="ghost" size="icon" className="h-5 w-5" onClick={onMaximize}><Maximize2 className="h-3 w-3" /></Button>
+          <Button variant="ghost" size="icon" className="h-5 w-5" onClick={onClose}><X className="h-3 w-3" /></Button>
         </div>
       </div>
       <div className="flex-1 overflow-auto p-2 text-xs">{window.content}</div>
@@ -252,11 +308,25 @@ const TradingWindow: React.FC<{ window: Window }> = ({ window }) => {
 }
 
 const ChartWindow: React.FC = () => {
+  const [timeframe, setTimeframe] = useState("D")
+  const [symbol, setSymbol] = useState("NASDAQ:AAPL")
+
+  const timeframeMap = {
+    "1m": "1",
+    "5m": "5",
+    "15m": "15",
+    "1H": "60",
+    "1D": "D"
+  }
+
   return (
-    <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <h3 className="font-bold text-lg">AAPL - Apple Inc.</h3>
-        <Select defaultValue="1D">
+    <div className="flex flex-col h-full">
+      <div className="flex justify-between items-center mb-2">
+        <h3 className="font-bold text-lg">{symbol.split(":")[1]} - Apple Inc.</h3>
+        <Select 
+          defaultValue="1D" 
+          onValueChange={(value) => setTimeframe(timeframeMap[value as keyof typeof timeframeMap])}
+        >
           <SelectTrigger className="w-[100px]">
             <SelectValue placeholder="Timeframe" />
           </SelectTrigger>
@@ -269,10 +339,10 @@ const ChartWindow: React.FC = () => {
           </SelectContent>
         </Select>
       </div>
-      <div className="bg-gray-700 h-64 flex items-center justify-center">
-        Advanced Chart Placeholder
+      <div className="flex-1">
+        {/* Your TradingViewChart Component */}
       </div>
-      <div className="flex space-x-2">
+      <div className="flex space-x-2 mt-2">
         <Button variant="outline" size="sm">Indicators</Button>
         <Button variant="outline" size="sm">Drawing Tools</Button>
         <Button variant="outline" size="sm">Compare</Button>
