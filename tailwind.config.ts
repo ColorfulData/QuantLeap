@@ -1,63 +1,70 @@
-import type { Config } from "tailwindcss";
+// tailwind.config.js
 
-const config: Config = {
-    darkMode: ["class"],
-    content: [
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: "class", // Enable dark mode using the 'class' strategy
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-  	extend: {
-  		colors: {
-  			background: 'hsl(var(--background))',
-  			foreground: 'hsl(var(--foreground))',
-  			card: {
-  				DEFAULT: 'hsl(var(--card))',
-  				foreground: 'hsl(var(--card-foreground))'
-  			},
-  			popover: {
-  				DEFAULT: 'hsl(var(--popover))',
-  				foreground: 'hsl(var(--popover-foreground))'
-  			},
-  			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))'
-  			},
-  			secondary: {
-  				DEFAULT: 'hsl(var(--secondary))',
-  				foreground: 'hsl(var(--secondary-foreground))'
-  			},
-  			muted: {
-  				DEFAULT: 'hsl(var(--muted))',
-  				foreground: 'hsl(var(--muted-foreground))'
-  			},
-  			accent: {
-  				DEFAULT: 'hsl(var(--accent))',
-  				foreground: 'hsl(var(--accent-foreground))'
-  			},
-  			destructive: {
-  				DEFAULT: 'hsl(var(--destructive))',
-  				foreground: 'hsl(var(--destructive-foreground))'
-  			},
-  			border: 'hsl(var(--border))',
-  			input: 'hsl(var(--input))',
-  			ring: 'hsl(var(--ring))',
-  			chart: {
-  				'1': 'hsl(var(--chart-1))',
-  				'2': 'hsl(var(--chart-2))',
-  				'3': 'hsl(var(--chart-3))',
-  				'4': 'hsl(var(--chart-4))',
-  				'5': 'hsl(var(--chart-5))'
-  			}
-  		},
-  		borderRadius: {
-  			lg: 'var(--radius)',
-  			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
-  		}
-  	}
+    extend: {
+      colors: {
+        background: {
+          DEFAULT: "#0A0D14",
+          elevated: "#11141C",
+          header: "#161923",
+        },
+        text: {
+          primary: "#FFFFFF",
+          secondary: "#94A3B8",
+          muted: "#64748B",
+        },
+        border: {
+          DEFAULT: "rgba(255, 255, 255, 0.06)",
+          strong: "#2D3139",
+          hover: "rgba(255, 255, 255, 0.1)",
+        },
+        accent: {
+          primary: "#2962FF",
+          secondary: "#4895EF",
+          muted: "#2962FF15",
+        },
+        trading: {
+          buy: {
+            DEFAULT: "#00CA90",
+            muted: "#00CA9015",
+            hover: "#00E6A0",
+          },
+          sell: {
+            DEFAULT: "#FF3B46",
+            muted: "#FF3B4615",
+            hover: "#FF4B56",
+          },
+        },
+        status: {
+          success: "#10B981",
+          warning: "#F59E0B",
+          error: "#EF4444",
+          info: "#3B82F6",
+        },
+      },
+      boxShadow: {
+        panel: "0 4px 6px -1px rgba(0, 0, 0, 0.5)",
+        card: "0 10px 15px -3px rgba(0, 0, 0, 0.5)",
+      },
+      borderRadius: {
+        DEFAULT: "6px",
+        lg: "8px",
+        xl: "12px",
+      },
+      fontFamily: {
+        sans: ['var(--font-inter)', 'sans-serif'],
+        geistSans: ['var(--font-geist-sans)', 'sans-serif'],
+        geistMono: ['var(--font-geist-mono)', 'monospace'],
+      },
+    },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [],
 };
-export default config;

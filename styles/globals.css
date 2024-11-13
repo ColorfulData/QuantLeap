@@ -1,0 +1,71 @@
+/* src/styles/globals.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Global Styles */
+@layer base {
+  /* Global Body Style */
+  body {
+    @apply bg-background text-primary font-sans antialiased;
+  }
+
+  /* Panel Styles */
+  .trading-panel {
+    @apply bg-background-elevated border border-border rounded-lg shadow-panel;
+  }
+
+  /* Header Styles */
+  .panel-header {
+    @apply bg-background-header border-b border-border px-4 py-3 text-secondary;
+  }
+
+  /* Footer Styles */
+  .trading-footer {
+    @apply bg-background-header border-t border-border px-4 py-3 text-secondary;
+  }
+
+  /* Button Styles */
+  .btn-primary {
+    @apply bg-accent-primary text-white rounded-md px-3 py-2 transition hover:bg-accent-primary/90;
+  }
+
+  .btn-secondary {
+    @apply bg-background-header text-secondary rounded-md px-3 py-2 transition hover:bg-background-header/80;
+  }
+
+  /* Text Muted Styles */
+  .text-muted {
+    @apply text-muted;
+  }
+
+  /* Text Secondary Styles */
+  .text-secondary {
+    @apply text-secondary;
+  }
+}
+
+/* Enhanced Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-background;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-accent-primary/50 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-accent-primary/70;
+}
+
+/* Firefox Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: theme('colors.accent.primary/50') theme('colors.background.DEFAULT');
+}

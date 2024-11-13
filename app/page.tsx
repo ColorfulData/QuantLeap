@@ -1,5 +1,17 @@
-import AdvancedTradingTerminal from "@/components/advanced-trading-terminal"
+// src/app/page.tsx
 
-export default function Page() {
-  return <AdvancedTradingTerminal />
-}
+"use client";
+
+import React from "react";
+import AdvancedTradingTerminal from "@/components/AdvancedTradingTerminal";
+
+const HomePage = () => {
+  // Removed layout state as it's managed in layout.tsx
+  return (
+    <div>
+      {/* Your page-specific content here */}
+    </div>
+  );
+};
+
+export default HomePage;
