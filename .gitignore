@@ -64,3 +64,4 @@ dist/
 build/
 out/
 .turbo
+.vercel

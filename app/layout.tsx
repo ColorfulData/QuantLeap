@@ -12,6 +12,7 @@ import Headers from "@/components/Headers";
 import Footer from "@/components/Footer";
 import AdvancedTradingTerminal from "@/components/AdvancedTradingTerminal";
 import { analyzeSearchTerm } from "@/components/utils/searchUtils";
+import Button from "@/components/ui/Button";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 

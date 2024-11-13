@@ -15,7 +15,7 @@ import {
   Settings,
   Minimize2,
 } from "lucide-react";
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import Button from "@/components/ui/Button";
 

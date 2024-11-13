@@ -18,6 +18,7 @@ import MacDock from "@/components/MacDock"; // Ensure this path is correct
 import TradingViewChart from "@/components/windows/TradingViewChart";
 import TechnicalAnalysis from "@/components/windows/TechnicalAnalysis";
 
+
 interface AdvancedTradingTerminalProps {
   currentLayout: "grid" | "tabs";
   symbol: string;
