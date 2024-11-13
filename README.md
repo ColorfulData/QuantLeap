@@ -1,36 +1,155 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# QuantLeap Trading Terminal
+ [QuantLeap](https://quantleap.vercel.app/)
+## Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Technology Stack](#technology-stack)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Configuration](#configuration)
+- [Running the Application](#running-the-application)
+- [Project Structure](#project-structure)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [License](#license)
+
+
+## Overview
+
+The **QuantLeap Trading Terminal** is an advanced trading dashboard designed to provide comprehensive tools for stock trend analysis, real-time market data, and portfolio management. Created with **Next.js** and **React**, this project offers a seamless, data-driven experience ideal for modern trading.
+
+## Features
+
+- **Real-Time Market Data**: Displays live stock prices, order books, and trade info.
+- **Technical Analysis Tools**: Provides charts for indicators like RSI and MACD.
+- **News Feed**: Aggregates live news relevant to your stock watchlist.
+- **Liquidity Management**: Calculates real-time liquidity and allows for stop-loss and leverage entries.
+- **Customizable Layout**: Flexible grid and tabbed views for organizing market data.
+- **Search & Window Controls**: Minimize/maximize windows for quick data access.
+
+## Screenshots
+
+Include relevant screenshots to showcase the functionality:
+
+### Dashboard
+![Dashboard](./screenshots/dashboard.png)
+
+- **Dashboard**: A snapshot of the main trading interface.
+### Technical Analysis
+
+![Technical Analysis](./screenshots/technical-analysis.png)
+
+- **Technical Analysis**: Detailed chart views with technical indicators.
+
+### News Feed
+![News Feed](./screenshots/news-feed.png)
+- **News Feed**: Display of real-time news.
+
+### Liquidity Management
+
+![Liquidity Management](./screenshots/liquidity-management.png)
+
+- **Liquidity Management**: Insights on risk position and SL.
+
+## Technology Stack
+
+- **Frontend**: Next.js, React, TypeScript, Tailwind CSS
+- **Charting Libraries**: Recharts, Chart.js, react-chartjs-2
+- **State Management**: React Hooks, Context API
+- **APIs**: Axios for data fetching
+- **UI Components**: MUI, Radix UI
+- **Icons**: Lucide React
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+Ensure you have the following installed:
+- **Node.js** (v18 or higher)
+- **npm** (v10.9.0 or higher)
+- **Git**
+
+### Installation
+
+1. **Clone the Repository**:
+
+   ```bash
+   git clone https://github.com/colorfuldata/quantleap.git
+   ```
+
+2. **Navigate to the Project Directory**:
+
+   ```bash
+   cd quantleap-trading-terminal
+   ```
+
+3. **Install Dependencies**:
+
+   ```bash
+   npm install
+   ```
+
+### Configuration
+
+1. **Environment Variables**:
+   Set up your `.env.local` file with API keys for data sources.
+
+   ```env
+   # Example API keys
+   NEWS_API_KEY=your_news_api_key
+   YAHOO_FINANCE_API_KEY=your_yahoo_finance_api_key
+   ```
+
+2. **API Keys**:
+   - Sign up for keys from [NewsAPI](https://newsapi.org/), [Yahoo Finance API](https://rapidapi.com/), etc.
+
+## Running the Application
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be accessible at [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+quantleap-trading-terminal/
+├── public/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── services/
+│   └── styles/
+├── .env.local
+├── package.json
+└── README.md
+```
 
-## Learn More
+- **components/**: Reusable UI components
+- **pages/**: Next.js routes
+- **services/**: API calls
+- **styles/**: Global and component-level styling
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project is ready for deployment on Vercel. Follow these steps:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Sign in to Vercel and create a new project.
+2. Connect your GitHub repository and configure environment variables on Vercel.
+3. Deploy with a single click.
 
-## Deploy on Vercel
+## Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contributions are welcome! Please fork the repository and create a pull request.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
