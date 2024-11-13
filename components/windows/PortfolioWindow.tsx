@@ -92,7 +92,7 @@ const PortfolioWindow: React.FC<PortfolioWindowProps> = ({ positions }) => {
           </div>
         </div>
         <div className="text-center">
-          <div className="text-text-muted text-sm">Day's P/L</div>
+          <div className="text-text-muted text-sm">Day&apos;s P/L</div>
           <div className={`text-lg font-bold ${totalPL >= 0 ? 'text-trading-buy' : 'text-trading-sell'}`}>
             {totalPL >= 0 ? '+' : ''}{totalPL.toLocaleString('en-US', { minimumFractionDigits: 2 })}
           </div>

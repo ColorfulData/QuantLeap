@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
 
   try {
-    const queryOptions = { period1: '2000-01-01', interval: '1d' as '1d' };
+    const queryOptions = { period1: '2000-01-01', interval: '1d' as const };
     const result = await yahooFinance.historical(symbol.toUpperCase(), queryOptions);
 
     if (!result || result.length === 0) {

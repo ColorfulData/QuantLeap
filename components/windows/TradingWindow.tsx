@@ -3,7 +3,7 @@
 "use client";
 
 import React from "react";
-import { ChevronUp, ChevronDown, X, Maximize2, Minimize2 } from "lucide-react";
+import { ChevronUp, ChevronDown, X,  Minimize2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Button from "@/components/ui/Button";
 import { WindowProps } from "@/components/types";

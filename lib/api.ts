@@ -11,19 +11,27 @@ export interface OrderBookData {
   asks: Order[];
 }
 
+export interface ApiError {
+  message: string;
+  status: number;
+}
+
 export async function fetchOrderBookData(symbol: string): Promise<OrderBookData> {
   try {
     const response = await fetch(`/api/orderBook?symbol=${encodeURIComponent(symbol)}`);
 
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Failed to fetch order book data');
+      const errorData = await response.json() as ApiError;
+      throw new Error(errorData.message || 'Failed to fetch order book data');
     }
 
-    const data: OrderBookData = await response.json();
+    const data = await response.json() as OrderBookData;
     return data;
-  } catch (error: any) {
-    console.error('Error in fetchOrderBookData:', error.message || error);
-    throw new Error(error.message || 'Failed to fetch order book data');
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Error in fetchOrderBookData:', error.message);
+      throw error;
+    }
+    throw new Error('Failed to fetch order book data');
   }
 }

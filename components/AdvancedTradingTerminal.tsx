@@ -11,7 +11,7 @@ import TradeAnalysis from "@/components/windows/TradeAnalysis";
 import PerformanceAnalysis from "@/components/windows/PerformanceAnalysis";
 import PortfolioWindow from "@/components/windows/PortfolioWindow";
 import LiquidityAnalysis from "@/components/windows/LiquidityAnalysis";
-import Button from "@/components/ui/Button";
+import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { v4 as uuidv4 } from "uuid";
 import MacDock from "@/components/MacDock"; // Ensure this path is correct
